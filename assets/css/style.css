@@ -1,0 +1,11 @@
+/* @import url("reset.css"); */
+
+body {
+    background: url("../images/background.jpg");
+    color: white;
+}
+
+.jumbotron {
+    background: transparent;
+}
+
