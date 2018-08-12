@@ -3,9 +3,13 @@
 body {
     background: url("../images/background.jpg");
     color: white;
+    font-family: 'Merienda', cursive;
 }
 
 .jumbotron {
     background: transparent;
 }
 
+.card {
+    color: black;
+}
