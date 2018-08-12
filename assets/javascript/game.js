@@ -1,4 +1,4 @@
-//console.log("hello world");
+console.log("link test");
 
 var words = ["monster", "witch", "ghost", "candy"];
 var chosenWord = "";
@@ -34,8 +34,7 @@ function startGame() {
     console.log(lettersinWord);
     console.log(numBlanks);
     console.log(blanksAndSuccesses);
-
-    startGame();
+    //startGame();
 }
 
 //check if letter exists in code
@@ -50,35 +49,34 @@ function checkLetters(letter) {
     }
     if (isLetterInWord) {
         for (var i = 0; i < numBlanks; i++) {
-            if (chosedWord[i] == letter) {
+            if (chosenWord[i] == letter) {
                 blanksAndSuccesses[i] = letter;
             }
         }
     }
     else {
         wrongLetters.push(letter);
-        guessesLeft--
+        numGuesses--
     }
 
     //test
     console.log(blanksAndSuccesses);
-
-    startGame();
 }
 
 function roundComplete() {
-    console.log("Win Count:" + wins + " | Los Count: " + losses + " | Guesses Left " + numGuesses);
+    console.log("Win Count:" + wins + " | Loss Count:" + losses + " | Guesses Left " + guessesLeft);
 
     document.getElementById("numGuesses").innerHTML = guessesLeft;
-    document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
-    document.getElementById("wrongGuesses").innerHTML = wrongLetters.join(" ");
+    document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join("");
+    document.getElementById("wrongGuesses").innerHTML = wrongLetters.join("");
 
     if (lettersinWord.toString() == blanksAndSuccesses.toString()) {
         wins++;
         alert("YOU WIN!!");
 
         document.getElementById("winCounter").innerHTML = wins;
-        //Initiates code (calls function)
+
+        //Initiates code (calls function)  
         startGame();
     }
 
@@ -90,6 +88,8 @@ function roundComplete() {
         //Initiates code (calls function)
         startGame();
     }
+}
+
 
     document.onkeyup = function (event) {
         var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
@@ -99,4 +99,4 @@ function roundComplete() {
         //test
         console.log(userGuess);
     }
-}
+
