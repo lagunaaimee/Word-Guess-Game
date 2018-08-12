@@ -12,7 +12,7 @@ var losses = 0;
 var guessesLeft = 9;
 
 
-function startGame () {
+function startGame() {
     chosenWord = words[Math.floor(Math.random() * words.length)];
     lettersinWord = chosenWord.split("");
     numBlanks = lettersinWord.length;
@@ -34,6 +34,8 @@ function startGame () {
     console.log(lettersinWord);
     console.log(numBlanks);
     console.log(blanksAndSuccesses);
+
+    startGame();
 }
 
 //check if letter exists in code
@@ -41,31 +43,60 @@ function checkLetters(letter) {
 
     var isLetterInWord = false;
 
-    for (var i=0; i<numBlanks; i++) {
-        if(chosenWord[i] == letter) {
+    for (var i = 0; i < numBlanks; i++) {
+        if (chosenWord[i] == letter) {
             isLetterInWord = true;
         }
     }
-}
-
-
-//Initiates code (calls function)
-startGame();
-
-document.onkeyup = function (event) {
-    var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-    checkLetters(userGuess);
+    if (isLetterInWord) {
+        for (var i = 0; i < numBlanks; i++) {
+            if (chosedWord[i] == letter) {
+                blanksAndSuccesses[i] = letter;
+            }
+        }
+    }
+    else {
+        wrongLetters.push(letter);
+        guessesLeft--
+    }
 
     //test
-    console.log(userGuess);
+    console.log(blanksAndSuccesses);
+
+    startGame();
 }
 
-// };
+function roundComplete() {
+    console.log("Win Count:" + wins + " | Los Count: " + losses + " | Guesses Left " + numGuesses);
 
-// var letterButtons = $(".letterButtons");
-// for (var i = 0; i < letters.length; i++) {
-//     console.log("hello world");
-//     var button = document.createElement("button");
-//     var t = document.createTextNode(letters[i]);
-//     button.appendChild(t); 
-//     letterButtons.appendChild(button); 
+    document.getElementById("numGuesses").innerHTML = guessesLeft;
+    document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("wrongGuesses").innerHTML = wrongLetters.join(" ");
+
+    if (lettersinWord.toString() == blanksAndSuccesses.toString()) {
+        wins++;
+        alert("YOU WIN!!");
+
+        document.getElementById("winCounter").innerHTML = wins;
+        //Initiates code (calls function)
+        startGame();
+    }
+
+    else if (guessesLeft == 0) {
+        losses++;
+        alert("You lost!");
+
+        document.getElementById("lossCounter").innerHTML = losses;
+        //Initiates code (calls function)
+        startGame();
+    }
+
+    document.onkeyup = function (event) {
+        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+        checkLetters(userGuess);
+        roundComplete();
+
+        //test
+        console.log(userGuess);
+    }
+}
